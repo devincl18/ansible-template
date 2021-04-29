@@ -1,0 +1,4 @@
+- hosts: apacheserver
+  become: yes
+  roles:
+    - "../roles/apacheserver"

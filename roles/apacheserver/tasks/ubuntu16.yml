@@ -1,0 +1,30 @@
+- name: Install prerequisites
+  apt:
+    name:
+      - "aptitude"
+    update_cache: yes
+    state: latest
+    force_apt_get: yes
+- name: Install apache httpd  (state=present is optional)
+  apt:
+    name: apache2
+    update_cache: yes
+    state: latest
+- name: Copy index file
+  copy:
+    src: "files/index.html.j2"
+    dest: "/var/www/html/index.html"
+- name: Copy conf file
+  copy:
+    src: "files/apache.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_conf }}.conf"
+- name: Enabled new site
+  shell: /usr/sbin/a2ensite {{ http_conf }}
+- name: Disable default apache sites
+  shell: /usr/sbin/a2dissite 000-default.conf
+  when: disable_default
+- name: "UFW - Allow HTTP on port {{ http_port }}"
+  ufw:
+    rule: allow
+    port: "{{ http_port }}"
+    proto: tcp

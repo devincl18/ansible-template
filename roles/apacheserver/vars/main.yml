@@ -1,0 +1,6 @@
+---
+app_user: "root"
+http_host: "slave2"
+http_conf: "apache.conf"
+http_port: "8080"
+disable_default: true
