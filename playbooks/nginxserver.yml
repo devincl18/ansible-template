@@ -1,0 +1,4 @@
+- hosts: nginxserver
+  become: yes
+  roles:
+    - ../roles/common

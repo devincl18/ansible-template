@@ -1,0 +1,21 @@
+- name: Install prerequisites
+  apt:
+    name:
+      - "aptitude"
+    update_cache: yes
+    state: latest
+    force_apt_get: yes
+- name: Install Nginx
+  apt:
+    name: "nginx"
+    update_cache: yes
+    state: latest
+- name: All Nginx HTTP
+  ufw:
+    rule: allow
+    name: "Nginx HTTP"
+- name: Enable nginx
+  service:
+    name: nginx
+    enabled: yes
+    state: started
