@@ -1,0 +1,2 @@
+hnsostname: slave2
+ansible_host: 172.16.0.4

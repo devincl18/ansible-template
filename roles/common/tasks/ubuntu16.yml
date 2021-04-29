@@ -1,0 +1,9 @@
+- name: apt-get install tool
+  apt:
+    pkg:
+      - vim
+      - git
+    state: latest
+    update_cache: yes
+  tags:
+    - common

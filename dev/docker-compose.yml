@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+  master:
+    image: kein/ansible-server:latest
+    container_name: master
+    hostname: master
+    tty: true
+    stdin_open: true
+    working_dir: "/home"
+    volumes:
+      - "../:/home"
+    networks:
+      ansible-network:
+        ipv4_address: 172.16.0.2
+    extra_hosts:
+      - "slave1:172.16.0.3"
+      - "slave2:172.16.0.4"
+    depends_on:
+      - slave1
+      - slave2
+
+  slave1:
+    image: kein/ssh-client:latest
+    container_name: slave1
+    hostname: slave1
+    tty: true
+    stdin_open: true
+    ports:
+    - "80:80"
+    networks:
+      ansible-network:
+        ipv4_address: 172.16.0.3
+
+  slave2:
+    image: kein/ssh-client:latest
+    container_name: slave2
+    hostname: slave2
+    tty: true
+    stdin_open: true
+    ports:
+    - "8080:8080"
+    networks:
+      ansible-network:
+        ipv4_address: 172.16.0.4
+
+networks:
+  ansible-network:
+    ipam:
+      config:
+        - subnet: "172.16.0.0/24"
+
+

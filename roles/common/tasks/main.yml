@@ -1,0 +1,3 @@
+- name: Install the common app for Debian
+  include: ubuntu16.yml
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "16"
